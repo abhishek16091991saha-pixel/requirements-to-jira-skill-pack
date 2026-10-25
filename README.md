@@ -1,7 +1,7 @@
 # requirements-to-jira-skill-pack 
 Requirements-to-Jira Skill Pack
 An AI-assisted business analysis workflow: messy meeting notes, emails and draft BRDs go in; Jira-ready user stories come out, with conflicts, vague requirements and unowned decisions flagged instead of guessed.
-Abhishek Saha | Senior Analyst, | LinkedIn-www.linkedin.com/in/abhishek-saha-analyst| Email-abhishek16091991saha@gmail.com
+Abhishek Saha | Senior Analyst, | LinkedIn-www.linkedin.com/in/abhishek-saha-analyst| 
 All data in this project is synthetic. Nothing in it comes from my employer or any client.
 At a glance
 I built and tested a Claude Skill that turns raw requirements material into traceable user stories with Given/When/Then acceptance criteria, then loads them into Jira. I tested it on two synthetic scenarios with a written rubric, improved it across three versions, and imported the output into Jira. The aim was not just faster drafting. It was a workflow a BA or PMO team could trust: every story points back to its source, and nothing is invented.
