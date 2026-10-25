@@ -88,25 +88,7 @@ Use only approved AI tools, and never put confidential or customer data into an 
 A named human signs off every story set before it enters the backlog.
 Keep a standing test set and rerun it whenever the Skill or the underlying model changes.
 Keep an audit trail of what the Skill produced and what the human changed.
-Repository contents
-requirements-to-jira-skill-pack/
-├── README.md
-├── docs/
-      Overview page
-│   ├── case-study.pdf
-│   ├── results-and-evaluation-sheet.pdf
-│   ├── ai-playbook.pdf
-│   └── adoption-and-rollout-plan.pdf
-├── skills Files/
-│   ├── story-drafter-v1/SKILL.md
-│   ├── story-drafter-v2/SKILL.md
-│   ├── story-drafter-v3/SKILL.md
-│   └── CHANGELOG.md
 
-
-│   ├── kestrel_user_stories.csv
-│   └── heron_user_stories.csv
-└── screenshots/
 Trying the Skill
 
 Each Skill folder contains one SKILL.md file. To use one, zip the folder and upload it in the Skills settings of your Claude account, switch it on, then paste your source material into a new chat and ask for Jira-ready user stories. Use synthetic or approved data only.
