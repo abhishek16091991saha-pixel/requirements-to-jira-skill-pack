@@ -2,7 +2,7 @@ Requirements-to-Jira Skill Pack
 
 An AI-assisted business analysis workflow: messy meeting notes, emails and draft BRDs go in; Jira-ready user stories come out, with conflicts, vague requirements and unowned decisions flagged instead of guessed.
 
-Abhishek Saha | Senior Analyst, CEO’s Office & Strategic Program Management | LinkedIn
+Abhishek Saha | Senior Analyst | LinkedIn
 
 All data in this project is synthetic. Nothing in it comes from my employer or any client.
 
