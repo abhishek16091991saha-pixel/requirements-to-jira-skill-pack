@@ -1,0 +1,148 @@
+"Summary","Issue Type","Description","Priority","Labels"
+"S-01: Create an expense claim","Story","As an employee, I want to create an expense claim with the details of my spend and a category, so that I can submit expenses digitally and be paid through payroll.
+
+Acceptance criteria:
+1. Given I am creating a claim on mobile or web, when I enter its details, then I can record the date of spend, amount, currency, category and a note.
+2. Given I am choosing a category, when I open the category list, then the options are fuel, meals, accommodation, parking and other.
+
+Notes: Merchant is pre-filled by ScanPoint (C FR-3) but is not in the FR-1 field list; see S-02. Whether the note is mandatory: [not stated].
+Status: Ready
+Source: A 00:00 Nadia; A 01:18 Tomás; C §2; C FR-1; C FR-2","High",""
+"S-02: Pre-fill claim details from a receipt photo","Story","As an employee, I want to photograph a receipt and have it read automatically, so that the claim details are pre-filled for me.
+
+Acceptance criteria:
+1. Given I have added a receipt photo to a claim, when ScanPoint reads it, then the date, amount and merchant are pre-filled on the claim.
+
+Notes: Dependency: ScanPoint contract is signed and sandbox API keys are held (A 00:34); production access: [not stated]. Integration owner: Raj Malhotra, IT (C §5). ScanPoint accuracy on crumpled receipts is untested (F bullet 4; see U-03). [not stated]: accuracy target, what happens when a receipt cannot be read, whether pre-filled values can be edited, whether pre-fill works offline (G-03).
+Status: Needs confirmation
+Source: A 00:27 Raj; A 00:34 Elena; C FR-3; C §5; F bullet 4","Medium","needs-confirmation"
+"S-03: Capture receipts offline and sync later","Story","As a driver, I want to photograph a receipt when I have no signal and have it sync later, so that poor coverage on the road does not stop me claiming.
+
+Acceptance criteria:
+1. Given I have no connectivity, when I photograph a receipt, then the receipt is captured and held on my device.
+2. Given a receipt was captured offline, when my device is connected again, then the receipt syncs.
+
+Notes: Only receipt capture is stated as working offline (C NFR-2); whether the rest of claim entry works offline: [not stated] (G-03). Sync is not yet tested on field devices (F bullet 5; see U-04). [not stated]: sync failure and retry behaviour.
+Status: Needs confirmation
+Source: A 00:19 Tomás; A 00:27 Raj; C NFR-2; F bullet 5","High","needs-confirmation"
+"S-04: Require a receipt for expenses over £25","Story","As an employee, I want the claim to require a receipt photo when an expense is over £25, so that it meets the current policy.
+
+Acceptance criteria:
+1. Given an expense is over £25, when I submit the claim without a receipt photo, then the claim cannot be submitted.
+2. Given an expense is over £25, when I attach a photo of the receipt, then the photo satisfies the receipt requirement.
+
+Notes: Expenses of £25 or less: no rule stated beyond 'over £25'. Whether £25 applies per claim or per 'single expense' (C FR-3): see G-02. Application to foreign-currency amounts depends on S-06.
+Status: Ready
+Source: A 01:04 Elena; A 01:10 Nadia; C FR-3; E Tomás (receipt rule); E Elena (receipt rule)","High",""
+"S-05: Claim mileage at the approved rate","Story","As an employee, I want to claim mileage per kilometre, so that I am reimbursed at the approved rate.
+
+Acceptance criteria:
+1. Given I create a mileage claim with a distance in km, when the amount is calculated, then it equals the distance multiplied by £0.45 per km.
+
+Notes: [not stated]: how distance is entered (manual or tracked); whether the rate can change over time (A 01:24 calls it 'the approved rate'); whether the receipt, approval and 30-day rules apply to mileage claims.
+Status: Needs confirmation
+Source: A 01:24 Elena; C §2; C FR-4","High","needs-confirmation"
+"S-06: Convert foreign-currency claims","Story","As an employee, I want to claim spend in a foreign currency, so that I am reimbursed for it.
+
+Acceptance criteria:
+1. Given I submit a claim in a foreign currency, when it is converted, then the rate applied is [not stated: rate on the day of spend or on the day of the claim].
+
+Notes: Decision outstanding (U-01). Also [not stated]: the currency claims are converted into, and the source of rates. Affects S-04 (£25 threshold), S-09, S-10 and S-11 (approval thresholds) and S-16 (payroll amount).
+Status: Blocked
+Source: A 01:55 Raj; A 02:03 Elena; A 02:07 Nadia; C FR-1; C FR-9","Medium","needs-decision"
+"S-07: Submit claims within 30 days of spend","Story","As an employee, I want to submit a claim up to 30 days after the date of spend, so that I have a defined window to claim.
+
+Acceptance criteria:
+1. Given the date of spend is no more than 30 days before today, when I submit the claim, then it is accepted for processing.
+2. Given the date of spend is more than 30 days before today, when I try to submit the claim, then it is not accepted (assumed).
+
+Notes: Criterion 2 is assumed from 'must be submitted within 30 days' (C FR-6); how the rule is enforced when the window is missed (block, flag, exception): [not stated]. Calendar or working days: [not stated]. For offline captures, whether the 30 days is measured to the capture date or the sync date: [not stated] (G-03).
+Status: Needs confirmation
+Source: A 02:12 Tomás; A 02:16 Nadia; C FR-6; E Raj (30 days); E Elena (30 days); F bullet 3","High","needs-confirmation"
+"S-08: Flag duplicate receipt submissions","Story","As finance, I want a receipt that has already been submitted to be flagged if it is submitted again, so that duplicate claims are caught.
+
+Acceptance criteria:
+1. Given a receipt has already been submitted on a claim, when the same receipt is submitted again, then the second submission is flagged as a duplicate.
+
+Notes: Role is not named in D bullet 5; finance is assumed. [not stated]: what makes two submissions 'the same receipt', who sees the flag, and whether a flagged claim is held, blocked or routed for review (including claims that would otherwise be auto-approved).
+Status: Needs confirmation
+Source: D bullet 5","Medium","needs-confirmation"
+"S-09: Line manager decides on claims over £100","Story","As a line manager, I want claims over £100 sent to me for approval, so that higher-value claims are reviewed before payment.
+
+Acceptance criteria:
+1. Given a claim is over £100, when it is submitted, then it is sent to the claimant's line manager for approval.
+2. Given a claim is awaiting my approval, when I approve it, then it becomes an approved claim that payroll picks up.
+3. Given a claim is awaiting my approval, when I reject it, then it is marked rejected and the rejection reason is held with the claim.
+
+Notes: Claims over £50 up to £100 are not covered here; see C-01, S-10 and S-11. Exactly £100: G-02. [not stated]: who enters the rejection reason and whether it is mandatory.
+Status: Needs confirmation
+Source: A 01:31 Nadia; A 01:49 Chris; C FR-7; C FR-8; B msg 1, item 1; B msg 1, item 2; D bullet 3; E Tomás (rejected claims); E Elena (rejected claims)","High","needs-confirmation"
+"S-10: Auto-approve lower-value claims","Story","As an employee, I want lower-value claims approved automatically, so that approval is quick and managers are not sent low-value claims.
+
+Acceptance criteria:
+1. Given a claim is below the £100 threshold, when I submit it, then it is approved automatically with no manager approval.
+
+Notes: Blocked by C-01: Internal Audit requires manager approval over £50 (S-11). A 01:31 says 'under £100' and C FR-7 says 'up to £100'; exactly £100 is G-02. If this story proceeds, what is recorded as the approver for S-13: [not stated] (G-01). Nadia says policy 4.2 is being relaxed (B msg 2); Meera says the policy has not changed (B msg 3).
+Status: Blocked
+Source: A 01:31 Nadia; C FR-7; B msg 2","High","needs-decision"
+"S-11: Require manager approval for claims over £50","Story","As Internal Audit, I want any claim over £50 approved by the employee's line manager before payment, so that Expenses Policy 4.2 is met.
+
+Acceptance criteria:
+1. Given a claim is over £50, when it is submitted, then it requires approval by the employee's line manager before it can be paid.
+
+Notes: Conflicts with S-10 (C-01); kept separate until decided. The text of Expenses Policy 4.2 is not attached. Meera Joshi says the policy has not changed and offers to take it to the Audit Committee (B msg 3).
+Status: Blocked
+Source: B msg 1, item 1; B msg 3","High","needs-decision"
+"S-12: Prevent employees approving their own claims","Story","As Internal Audit, I want it to be impossible for an employee to approve their own claim, so that approvals are independent.
+
+Acceptance criteria:
+1. Given I am the claimant on a claim awaiting approval, when I try to approve it, then the approval is not allowed.
+
+Notes: [not stated]: how the restriction is enforced or what the user sees.
+Status: Ready
+Source: B msg 1, item 3","High",""
+"S-13: Record every approval or rejection for 6 years","Story","As Internal Audit, I want every approval or rejection recorded with who, when and the decision and kept for 6 years, so that decisions can be audited.
+
+Acceptance criteria:
+1. Given a claim is approved or rejected, when the decision is made, then a record is stored with who made the decision, when, and the decision.
+2. Given a decision record has been stored, when 6 years have not yet passed, then the record is still kept.
+
+Notes: Owner: Finance Systems, Priyanka Shah (C §5). [not stated]: whether the 6 years run from the decision date, what happens after 6 years, who can retrieve the records. If auto-approval (S-10) proceeds, what 'who' means for an automatic approval: G-01. Retention against data protection requirements: G-04.
+Status: Ready
+Source: B msg 1, item 2; C §5","High",""
+"S-14: See the status of my claims","Story","As an employee, I want to see the status of each of my claims, so that I get paid without chasing anyone.
+
+Acceptance criteria:
+1. Given I have submitted claims, when I open my claims list, then each claim shows its status: submitted, approved or paid.
+2. Given a claim was rejected, when I view the status list, then the rejected claim appears with the rejection reason.
+
+Notes: 'Paid' needs Heron to learn that payroll has paid; how that confirmation arrives: [not stated] (G-05). The rejection reason comes from S-09.
+Status: Needs confirmation
+Source: A 00:00 Nadia; A 02:28 Elena; E Tomás (rejected claims); E Elena (rejected claims)","High","needs-confirmation"
+"S-15: Notify me when a claim changes status","Story","As an employee, I want to be notified when the status of my claim changes, so that I know without checking.
+
+Acceptance criteria:
+1. Given I use the mobile app, when the status of my claim changes, then I receive a push notification.
+2. Given I use the web version, when the status of my claim changes, then I receive an email.
+
+Notes: Recipient is not named; the claimant is assumed. [not stated]: whether approvers are notified when a claim is waiting for them.
+Status: Ready
+Source: E Raj (notifications); E Elena (notifications)","Medium",""
+"S-16: Send approved claims to payroll","Story","As payroll, I want approved claims sent to me daily with employee ID and amount, so that they are paid in the next payroll run.
+
+Acceptance criteria:
+1. Given claims have been approved, when the daily export runs, then payroll receives one line per approved claim with the employee ID and the amount.
+2. Given a claim is approved on or before the 20th of the month, when payroll next runs, then the claim is paid in that run.
+3. Given a claim is approved after the payroll cut-off on the 20th, when payroll runs, then the claim goes into the next month's run.
+
+Notes: Owner: Payroll, Chris Dubois (C §5). [not stated]: export format and delivery method, time of day, how the amount is expressed for foreign-currency claims (S-06), how payment is confirmed back to Heron (G-05).
+Status: Needs confirmation
+Source: A 01:49 Chris; C FR-8; C §5; D bullet 1; D bullet 2","High","needs-confirmation"
+"S-17: Report rejected claims with reasons for finance","Story","As finance, I want a list of rejected claims with the reason, so that I can see why claims were rejected.
+
+Acceptance criteria:
+1. Given claims have been rejected, when finance requests the list, then it shows each rejected claim with its rejection reason.
+
+Notes: [not stated]: format, period covered, how finance receives the list, fields other than the reason.
+Status: Needs confirmation
+Source: D bullet 3","Medium","needs-confirmation"
